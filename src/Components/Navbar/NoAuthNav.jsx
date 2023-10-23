@@ -5,6 +5,7 @@ import {FaCartShopping} from 'react-icons/fa6'
 import { Link } from 'react-router-dom';
 import {useDispatch} from 'react-redux'
 import {trueSlide} from '../../Features/reducer'
+import '../../App.css'
 const NoAuthNav = () => {
   const dispatch = useDispatch();
   return (
@@ -29,11 +30,11 @@ const NoAuthNav = () => {
           </div>
           <div className='hidden md:block text-xs lg:text-sm'>
               <Link to='/login'>
-                 <button className='bg-primary w-16 lg:w-20 py-1 mx-2 rounded-sm text-white'>Login</button>
+                 <button className='btnDobbleColor w-16 lg:w-20 py-1 mx-2 rounded-sm text-white'>Login</button>
               </Link>
               or
               <Link to='/signup'>
-                  <button className='bg-primary w-16 lg:w-20 py-1 mx-2 rounded-sm text-white'>SignUp</button>
+                  <button className='btnDobbleColor w-16 lg:w-20 py-1 mx-2 rounded-sm text-white'>SignUp</button>
               </Link>
           </div>
         </nav>

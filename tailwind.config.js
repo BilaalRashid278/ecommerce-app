@@ -14,6 +14,9 @@ module.exports = {
       borderColor : {
         'primary' : '#ff5722'
       },
+      screens : {
+        'xs' : '300px'
+      }
     },
   },
   plugins: [],

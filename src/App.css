@@ -7,3 +7,12 @@
     transform: translateX(0px);
     transition: transform 0.7s ease-in-out;
 }
+
+.btnDobbleColor{
+    background-image: linear-gradient(to left top,rgb(255, 87, 34),yellow);
+}
+
+
+  
+
+  
