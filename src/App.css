@@ -13,6 +13,35 @@
 }
 
 
-  
+/* _________ SignUp animation _______________________ */
 
+
+.animate-line1{
+    width: 0;
+    transition: animation 2s;
+    animation: startLine1 4s forwards;
+}
+.animate-line2{
+    width: 0;
+    transition: animation 2s;
+    animation: startLine2 4s forwards;
+}
+
+
+@keyframes startLine1 {
+    0%{
+        width: 0;
+    }
+    100%{
+        width: 30%;
+    }
+}
+@keyframes startLine2 {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 30%;
+    }
+}
   

@@ -10,7 +10,7 @@ import NavSearchBar from './Navbar/NavSearchBar';
 
 const Home = () => {
   const transfromNow = useSelector(state => state.NavTransfrom);
-  const isAuth = false
+  const isAuth = true
   return (
     <div className='relative'>
         <div>
