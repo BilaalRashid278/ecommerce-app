@@ -2,9 +2,13 @@ import React,{useRef,useState,useEffect} from 'react'
 import {currencyList, categories} from '../utils/constants';
 import {BiImage} from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom';
-
+import { FetchDataFromApi } from '../utils/api';
+import IsAuthNav from './Navbar/IsAuthNav';
+import SlideMenuAuth from './Navbar/SlideMenuAuth';
+import {useSelector} from 'react-redux'
 
 const CreateProduct = () => {
+  const transfromNow = useSelector(state => state.NavTransfrom);
   const navigate = useNavigate();
   const [imageBlob,setImageBlob] = useState('');
   const [showImg,setShowImg] = useState('hidden');
@@ -28,21 +32,19 @@ const CreateProduct = () => {
         price : price,
         currency : currency,
         image_url : imageBlob,
-        category : category.toLowerCase()
+        category : category.toLowerCase().split(' ').join('')
       }
       sendDataOnDataBase(obj);
     }
   };
   const sendDataOnDataBase = async (obj) => {
     try {
-      const jsonData = await JSON.stringify(obj);
-      console.log(jsonData)
-      const data = await fetch('http://localhost:5000/api/v1/new',{
+      const data = await FetchDataFromApi('/new',{
         method : 'POST',
         headers : {
           'Content-Type': 'application/json'
         },
-        body : jsonData
+        body : JSON.stringify(obj)
       });
       console.log(data);
       navigate('/SuccessCreatedProduct/true');
@@ -52,9 +54,10 @@ const CreateProduct = () => {
     }
   };
   return (
-    <React.Fragment>
+    <div>
+      <IsAuthNav/>
       <div className='flex justify-center py-14 w-[100%] h-[100vh]'>
-        <div className='w-[90%] lg:w-[50%] overflow-y-auto flex px-5'>
+        <div className='w-[90%] lg:w-[50%] py-10 flex px-5'>
           <div className='w-[100%]'>
 
             <div className='w-[100%] md:w-[50%]'>
@@ -108,7 +111,7 @@ const CreateProduct = () => {
               <img className='w-[20%] rounded' src={imageBlob} alt="ProductImage" />
             </div>
 
-            <div className='w-[100%] flex justify-center'>
+            <div className='w-[100%] py-5 flex justify-center'>
               <button onClick={() => {
                 allDataCheck(nameRef.current.value,textAreaRef.current.value,priceRef.current.value,currencyRef.current.value,imageBlob,categoryRef.current.value);
               }} className='w-[100%] px-2 py-1 bg-primary hover:bg-orange-600 text-white rounded'>Create Project</button>
@@ -116,7 +119,10 @@ const CreateProduct = () => {
           </div>
         </div>
       </div>
-    </React.Fragment>
+      <div className={`absolute w-72 nav-sliding ${transfromNow} h-[100vh] bg-primary top-0`}>
+          <SlideMenuAuth/>
+        </div>
+    </div>
   )
 }
 

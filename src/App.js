@@ -12,9 +12,17 @@ import { FetchDataFromApi } from './utils/api';
 function App(props) {
   const [apiData,setApiData] = useState([]);
   useEffect(() => {
-    FetchDataFromApi().then((data) => {
-      setApiData(data.products);
-    }).catch(e => console.log(e));
+      const data = FetchDataFromApi('/',{
+        method : 'GET'
+      });
+      data.then((data) => {
+        return data.json();
+      }).then((jsonData) => {
+        const {products} = jsonData
+        setApiData(products);
+      }).catch((err) => {
+          console.log(`Fetch Api in App js ${err.message}`);
+      })
   });
   return (
     <Context.Provider value={{apiData,setApiData}}>
