@@ -15,7 +15,6 @@ import {getApiData} from '../Features/apiSlice';
 
 const Home = () => {
   const {SelectedCategory} = useSelector(state => state.storeCategory);
-  console.log(SelectedCategory)
   const dispatch = useDispatch();
   const transfromNow = useSelector(state => state.NavTransfrom);
   const {api} = useSelector(state => state.apiSlice);
@@ -72,9 +71,7 @@ const Home = () => {
         </div>
 
         <div className='flex my-10'>
-            <div className='wrapper flex flex-wrap w-[95%] m-auto border border-red-700 '>
-              <ShowAllProducts/>
-            </div>
+            <ShowAllProducts/>
         </div>
     </div>
   )

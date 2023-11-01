@@ -1,4 +1,4 @@
-import React,{useRef,useState,useEffect} from 'react'
+import React,{useRef,useState} from 'react'
 import {currencyList, searchCategories} from '../utils/constants';
 import {BiImage} from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom';
