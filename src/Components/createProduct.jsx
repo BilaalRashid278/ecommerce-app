@@ -1,5 +1,5 @@
 import React,{useRef,useState,useEffect} from 'react'
-import {currencyList, categories} from '../utils/constants';
+import {currencyList, searchCategories} from '../utils/constants';
 import {BiImage} from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom';
 import { FetchDataFromApi } from '../utils/api';
@@ -18,10 +18,6 @@ const CreateProduct = () => {
   const priceRef = useRef(0);
   const currencyRef = useRef('');
   const categoryRef = useRef('');
-
-  useEffect(() => {
-
-  },[]);
   const allDataCheck = (name,description,price,currency,imageBlob,category) => {
     if(name.length < 1 || description.length < 1 || price.length < 1 || currency.length < 1 || imageBlob.length < 1 || category.length < 1){
       console.log("Please fill the data");
@@ -32,7 +28,7 @@ const CreateProduct = () => {
         price : price,
         currency : currency,
         image_url : imageBlob,
-        category : category.toLowerCase().split(' ').join('')
+        category : category.toLowerCase()
       }
       sendDataOnDataBase(obj);
     }
@@ -46,7 +42,6 @@ const CreateProduct = () => {
         },
         body : JSON.stringify(obj)
       });
-      console.log(data);
       navigate('/SuccessCreatedProduct/true');
     } catch (error) {
         console.log(error);
@@ -86,10 +81,10 @@ const CreateProduct = () => {
 
             <div>
               <label className='font-semibold text-primary' htmlFor="description">Select Category</label> <br />
-              <select ref={categoryRef} className='border-2 border-primary outline-none rounded'>{categories.map((category) => {
+              <select ref={categoryRef} className='border-2 border-primary outline-none rounded'>{searchCategories.map((category) => {
                 return(
                   <>
-                    <option value={category}>{category}</option>
+                    <option value={category.databaseName}>{category.name}</option>
                   </>
                 )
               })}</select>

@@ -1,3 +1,34 @@
+import image_1 from '../assets/img-1.jpg'
+import image_2 from '../assets/img-2.jpg'
+import image_3 from '../assets/img-3.jpg'
+import image_4 from '../assets/img-4.jpg'
+import image_5 from '../assets/img-5.jpg'
+import {GrRestroomWomen} from 'react-icons/gr'
+import {MdGirl} from 'react-icons/md'
+import {AiFillExperiment} from 'react-icons/ai'
+import {BsPhoneFill} from 'react-icons/bs'
+import {MdComputer} from 'react-icons/md'
+import {TbWashMachine} from 'react-icons/tb'
+import {PiWatchFill} from 'react-icons/pi'
+import {AiTwotoneHome} from 'react-icons/ai'
+import {PiBagSimpleFill} from 'react-icons/pi'
+import {FiDribbble} from 'react-icons/fi'
+import {MdHealthAndSafety} from 'react-icons/md'
+
+export const images = [image_1,image_2,image_3,image_4,image_5];
+export const searchCategories = [
+  {name : "Women's Fashion",icon : <MdGirl/>,databaseName : 'womenfashion'},
+  {name : "Men's Fashion",icon : <AiFillExperiment/>, databaseName : 'mensfashion'},
+  {name : "Phones & Telecomunications",icon : <BsPhoneFill  />, databaseName : 'phonesandtelecomunications'},
+  {name : "Computer ,Office & Security",icon : <MdComputer  />, databaseName : 'computersecurityoffice'},
+  {name : "Consumer Electronics",icon : <TbWashMachine  />, databaseName : 'consumerElectronics'},
+  {name : "Jewelery & Watches",icon : <PiWatchFill  />, databaseName : 'jeweleryandwatches'},
+  {name : "Home,Pet & Appliances",icon : <AiTwotoneHome  />, databaseName : 'homepetandappliances'},
+  {name : "Bags & Shoes",icon : <PiBagSimpleFill />, databaseName : 'bagsandshoes'},
+  {name : "Toys , Kids & Babies",icon : <FiDribbble />, databaseName : 'toyskidsandbabies'},
+  {name : "Beauty Health & Care",icon : <MdHealthAndSafety />, databaseName : 'beautyhealthandcare'},
+]
+
 const currencyList = [
   { code: "AFA", name: "Afghan Afghani", symbol: "؋" },
   { code: "ALL", name: "Albanian Lek", symbol: "Lek" },
