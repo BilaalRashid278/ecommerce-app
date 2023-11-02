@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react'
+import React, {useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import NoAuthNav from './Navbar/NoAuthNav'
 import IsAuthNav from './Navbar/IsAuthNav'
@@ -12,21 +13,19 @@ import {searchCategories} from '../utils/constants';
 import { searchCategory } from '../Features/categorySlice';
 import { FetchDataFromApi } from '../utils/api';
 import {getApiData} from '../Features/apiSlice';
+import { increaseProgressValue } from '../Features/progressSlice';
 
 const Home = () => {
-  const {SelectedCategory} = useSelector(state => state.storeCategory);
   const dispatch = useDispatch();
   const transfromNow = useSelector(state => state.NavTransfrom);
-  const {api} = useSelector(state => state.apiSlice);
-  console.log(api);
+  const navigate = useNavigate();
   const isAuth = true
   useEffect(() => {
-    callingApi();
-  },[SelectedCategory]);
-  const callingApi = () => {
-    const data = FetchDataFromApi(`/searchCategory?category=${SelectedCategory}`,{
+    dispatch(increaseProgressValue(50));
+    const data = FetchDataFromApi(`/`,{
       method : 'GET'
     });
+    dispatch(increaseProgressValue(80));
     data.then((data) => {
       return data.json();
     }).then((jsonData) => {
@@ -34,8 +33,9 @@ const Home = () => {
       dispatch(getApiData(products));
     }).catch((err) => {
         console.log(`Fetch Api in App js ${err.message}`);
-    })
-  };
+    });
+    dispatch(increaseProgressValue(100));
+  },[]);
   return (
     <div className='relative'>
         <div>
@@ -47,20 +47,21 @@ const Home = () => {
         <div className={`absolute w-72 z-20 nav-sliding ${transfromNow} h-[100vh] bg-primary top-0`}>
           {isAuth ? <SlideMenuAuth/> : <SlideMenuNoAuth/>}
         </div>
-        <div className='flex w-[100%] px-5 gap-2 mt-5'>
+        <div className='flex w-[100%] md:px-5 gap-2 mt-5'>
           <div className='hidden md:block w-[300px] h-[400px] border-2 border-primary bg-primary text-white rounded'>
             <ul className='flex flex-col justify-between h-[100%]'>
             {searchCategories.map((category,index) => {
                 return(
-                  <>
+                  <React.Fragment key={index}>
                     <li onClick={() => {
                       const convertedCategoryinLowercase = category.databaseName.toLowerCase().trim();
                       dispatch(searchCategory(convertedCategoryinLowercase));
-                    }} key={index} className='text-xs hover:shadow hover:scale-105 hover:px-4 h-[100%] px-2 cursor-pointer mt-1 border-b-1 border-white flex justify-between items-center'>
+                      navigate(`/searchCategory`);
+                    }} className='text-xs hover:shadow hover:scale-105 hover:px-4 h-[100%] px-2 cursor-pointer mt-1 border-b-1 border-white flex justify-between items-center'>
                      <span>{category.name}</span> 
                      <span className='text-sm'>{category.icon}</span>
                     </li>
-                  </>
+                  </React.Fragment>
                 )
               })}
             </ul>
@@ -70,7 +71,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className='flex my-10'>
+        <div className='flex my-10 px-5'>
             <ShowAllProducts/>
         </div>
     </div>

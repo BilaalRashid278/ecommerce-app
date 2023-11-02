@@ -5,35 +5,43 @@ import { useNavigate } from 'react-router-dom';
 import { FetchDataFromApi } from '../utils/api';
 import IsAuthNav from './Navbar/IsAuthNav';
 import SlideMenuAuth from './Navbar/SlideMenuAuth';
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
+import { increaseProgressValue } from '../Features/progressSlice';
 
 const CreateProduct = () => {
+  const dispatch = useDispatch();
+  dispatch(increaseProgressValue(50));
   const transfromNow = useSelector(state => state.NavTransfrom);
   const navigate = useNavigate();
-  const [imageBlob,setImageBlob] = useState('');
+  const [showImageUrl,setShowImageUrl] = useState('');
   const [showImg,setShowImg] = useState('hidden');
-  const fileRef = useRef('');
+  const urlRef = useRef('');
   const nameRef = useRef('');
   const textAreaRef = useRef('');
   const priceRef = useRef(0);
   const currencyRef = useRef('');
   const categoryRef = useRef('');
-  const allDataCheck = (name,description,price,currency,imageBlob,category) => {
-    if(name.length < 1 || description.length < 1 || price.length < 1 || currency.length < 1 || imageBlob.length < 1 || category.length < 1){
-      console.log("Please fill the data");
+  const allDataCheck = (name,description,price,currency,imageUrl,category) => {
+    dispatch(increaseProgressValue(30));
+    if(name.length < 1 || description.length < 1 || price.length < 1 || currency.length < 1 || imageUrl.length < 1 || category.length < 1){
+      alert("Please fill the data");
+      dispatch(increaseProgressValue(100));
     }else{
+      dispatch(increaseProgressValue(40));
       const obj = {
         name : name,
         description : description,
         price : price,
         currency : currency,
-        image_url : imageBlob,
+        image_url : imageUrl,
         category : category.toLowerCase()
-      }
+      };
+      dispatch(increaseProgressValue(60));
       sendDataOnDataBase(obj);
     }
   };
   const sendDataOnDataBase = async (obj) => {
+    dispatch(increaseProgressValue(80));
     try {
       const data = await FetchDataFromApi('/new',{
         method : 'POST',
@@ -42,12 +50,15 @@ const CreateProduct = () => {
         },
         body : JSON.stringify(obj)
       });
+      dispatch(increaseProgressValue(100));
       navigate('/SuccessCreatedProduct/true');
     } catch (error) {
         console.log(error);
+        dispatch(increaseProgressValue(100));
         navigate('/SuccessCreatedProduct/false');
     }
   };
+  dispatch(increaseProgressValue(100));
   return (
     <div>
       <IsAuthNav/>
@@ -90,25 +101,23 @@ const CreateProduct = () => {
               })}</select>
             </div>
 
-            <div onClick={() => fileRef.current.click()} style={{borderStyle : 'dashed'}} className='w-[100%] lg:w-[50%] flex justify-center items-center h-[250px] border-2 cursor-pointer border-primary my-5'>
-              <div className='flex items-center flex-col text-primary'>
-                <BiImage className='text-3xl'/>
-                <h1>Click to Select Product Image</h1>
-                <input onChange={(event) => {
-                    const url = URL.createObjectURL(fileRef.current.files[0]);
-                    setImageBlob(url);
-                    setShowImg('block');
-                }} ref={fileRef} className='hidden' type="file"/>
+            <div className='w-[100%]flex justify-center items-center cursor-pointer my-5'>
+              <div>
+                <label className='font-semibold text-primary' htmlFor='imgUrl'>Paste the Product Image url</label>
+                <input id='imgUrl' ref={urlRef} onChange={() => {
+                  setShowImageUrl(urlRef.current?.value);
+                  setShowImg('block');
+                  }} className='outline-none border-2 border-primary rounded px-2 py-1 my-2 w-[100%]' type="text"/>
               </div>
             </div>
 
-            <div className={`${showImg} w-[100%] my-5`}>
-              <img className='w-[20%] rounded' src={imageBlob} alt="ProductImage" />
+            <div className={`${showImageUrl.length <= 0 ? 'hidden' : showImg} w-[100%] my-5`}>
+              <img className='w-[20%] rounded' src={showImageUrl} alt="ProductImage" />
             </div>
 
             <div className='w-[100%] py-5 flex justify-center'>
               <button onClick={() => {
-                allDataCheck(nameRef.current.value,textAreaRef.current.value,priceRef.current.value,currencyRef.current.value,imageBlob,categoryRef.current.value);
+                allDataCheck(nameRef.current.value,textAreaRef.current.value,priceRef.current.value,currencyRef.current.value,urlRef.current.value,categoryRef.current.value);
               }} className='w-[100%] px-2 py-1 bg-primary hover:bg-orange-600 text-white rounded'>Create Project</button>
             </div>
           </div>

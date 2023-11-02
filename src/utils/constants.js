@@ -3,7 +3,7 @@ import image_2 from '../assets/img-2.jpg'
 import image_3 from '../assets/img-3.jpg'
 import image_4 from '../assets/img-4.jpg'
 import image_5 from '../assets/img-5.jpg'
-import {GrRestroomWomen} from 'react-icons/gr'
+
 import {MdGirl} from 'react-icons/md'
 import {AiFillExperiment} from 'react-icons/ai'
 import {BsPhoneFill} from 'react-icons/bs'
