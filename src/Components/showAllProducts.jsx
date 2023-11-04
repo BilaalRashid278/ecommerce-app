@@ -19,7 +19,6 @@ const ShowAllProducts = () => {
             </React.Fragment>
           )
         });
-        console.log(product._id);
         return(
           <React.Fragment key={index}>
             <div onClick={() => {
@@ -27,7 +26,7 @@ const ShowAllProducts = () => {
                 
             }} className='mt-3 h-[300px] w-[90%] sm:w-[300px] md:w-[280px] lg:w-[250px] xl:w-[230px] flex flex-col rounded cursor-pointer'>
               <div className='w-[100%] h-[65%]'>
-                <img className='w-[100%] h-[100%] object-cover rounded-xl' src={product?.image_url} alt="" />
+                <img className='w-[100%] h-[100%] object-cover rounded-xl' src={product?.image_url} alt='Image Not Found' />
               </div>
               <div>
                 <h1 className='font-bold'>{product?.name}</h1>

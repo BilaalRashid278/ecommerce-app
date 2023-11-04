@@ -24,6 +24,9 @@ const NavTransfromSlice = createSlice({
         },
         trueSlide : (state) => {
             return state = 'default-sliding'
+        },
+        fastSlide : (state) => {
+            return state = 'fast-nav-slide'
         }
     }
 });
@@ -57,7 +60,7 @@ const {setAnimation1} = aimate1.actions
 const {setAnimation2} = aimate2.actions
 
 const NavTransfrom = NavTransfromSlice.reducer
-const {falseSlide,trueSlide} = NavTransfromSlice.actions
+const {falseSlide,trueSlide,fastSlide} = NavTransfromSlice.actions
 
-export {LoadingFalse,LoadingTrue,falseSlide,trueSlide,setAnimation1,setAnimation2};
+export {LoadingFalse,LoadingTrue,falseSlide,trueSlide,setAnimation1,setAnimation2,fastSlide};
 export {Loader,NavTransfrom,animate1Reducer,animate2Reducer}

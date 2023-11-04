@@ -1,4 +1,4 @@
-import React,{useRef,useState} from 'react'
+import React,{useRef,useState, useEffect} from 'react'
 import {currencyList, searchCategories} from '../utils/constants';
 import {BiImage} from 'react-icons/bi'
 import { useNavigate } from 'react-router-dom';
@@ -7,14 +7,15 @@ import IsAuthNav from './Navbar/IsAuthNav';
 import SlideMenuAuth from './Navbar/SlideMenuAuth';
 import {useSelector, useDispatch} from 'react-redux'
 import { increaseProgressValue } from '../Features/progressSlice';
+import { fastSlide } from '../Features/reducer';
 
 const CreateProduct = () => {
   const dispatch = useDispatch();
-  dispatch(increaseProgressValue(50));
   const transfromNow = useSelector(state => state.NavTransfrom);
   const navigate = useNavigate();
   const [showImageUrl,setShowImageUrl] = useState('');
   const [showImg,setShowImg] = useState('hidden');
+  const [scrollValue,setScroll] = useState(0);
   const urlRef = useRef('');
   const nameRef = useRef('');
   const textAreaRef = useRef('');
@@ -58,7 +59,19 @@ const CreateProduct = () => {
         navigate('/SuccessCreatedProduct/false');
     }
   };
-  dispatch(increaseProgressValue(100));
+  const controllScroll = () => {
+    if(scrollValue >= 1){
+      dispatch(fastSlide());
+    }else{
+      setScroll(window.scrollY);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('scroll',controllScroll);
+  },[scrollValue]);
+  useEffect(() => {
+    dispatch(increaseProgressValue(100));
+  },[]);
   return (
     <div>
       <IsAuthNav/>
@@ -80,11 +93,11 @@ const CreateProduct = () => {
               <input ref={priceRef}  className='outline-none border-2 border-primary rounded px-2 py-1 my-2 w-[100%]' type="number" id="price" required />
               <label className='font-semibold text-primary' htmlFor="currency">Select Currency</label> <br />
               <select ref={currencyRef} id='currency' className='border-2 border-primary outline-none rounded w-[100%]'>
-                {currencyList.map((value) => {
+                {currencyList.map((value,index) => {
                   return (
-                    <>
+                    <React.Fragment key={index}>
                       <option value={value.code}>{`${value.name}  ${value.symbol}`}</option>
-                    </>
+                    </React.Fragment>
                   )
                 })}
               </select>
@@ -92,11 +105,11 @@ const CreateProduct = () => {
 
             <div>
               <label className='font-semibold text-primary' htmlFor="description">Select Category</label> <br />
-              <select ref={categoryRef} className='border-2 border-primary outline-none rounded'>{searchCategories.map((category) => {
+              <select ref={categoryRef} className='border-2 border-primary outline-none rounded'>{searchCategories.map((category,index) => {
                 return(
-                  <>
+                  <React.Fragment key={index}>
                     <option value={category.databaseName}>{category.name}</option>
-                  </>
+                  </React.Fragment>
                 )
               })}</select>
             </div>

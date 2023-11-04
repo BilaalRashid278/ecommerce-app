@@ -1,13 +1,15 @@
 .nav-sliding{
     transform: translateX(-400px);
-    transition: transform 0.7s ease-in-out;
+    transition: transform 0.7s;
 }
 
 .default-sliding{
     transform: translateX(0px);
-    transition: transform 0.7s ease-in-out;
+    transition: transform 0.7s;
 }
-
+.fast-nav-slide{
+    transform: translateX(-400px);
+}
 .btnDobbleColor{
     background-image: linear-gradient(to left top,rgb(255, 87, 34),yellow);
 }

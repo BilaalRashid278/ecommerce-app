@@ -9,6 +9,7 @@ import SuccessCreatedProduct from './Components/SuccessCreatedProduct';
 import NavigateCategory from './Components/NavigateCategory';
 import ProductDetail from './Components/ProductDetail';
 import Loader from './Components/Loader';
+import NoApiRespond from './Components/NoApiRespond';
 function App(props) {
 
   return (
@@ -25,6 +26,7 @@ function App(props) {
           <Route path='/SuccessCreatedProduct/:message' element={<SuccessCreatedProduct />} />
           <Route path='/searchCategory' element={<NavigateCategory />} />
           <Route path='/productDetails/:productID' element={<ProductDetail />} />
+          <Route path='/notRespond' element={<NoApiRespond />} />
         </Routes>
       </BrowserRouter>
     </React.Fragment>
