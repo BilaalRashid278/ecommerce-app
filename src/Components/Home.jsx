@@ -18,7 +18,6 @@ import { falseSlide } from '../Features/reducer';
 
 const Home = () => {
   const dispatch = useDispatch();
-  // const {api} = useSelector(state => state.apiSlice);
   const [page,setPage] = useState(1);
   const [limit,setLimit] = useState(0);
   const [scrollValue,setScroll] = useState(0);
